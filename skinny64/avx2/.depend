@@ -1,0 +1,2 @@
+main.o: main.c Skinny64128AVX2.h timing.h skinny64.c
+unpack.o: unpack.c Skinny64128AVX2.h
