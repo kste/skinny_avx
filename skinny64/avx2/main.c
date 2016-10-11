@@ -77,6 +77,8 @@ void check_testvector() {
     }
   } 
 
+  free(out);
+  free(in);
 }
 
 int cmp_dbl(const void *x, const void *y)
@@ -124,4 +126,8 @@ int main() {
   //Get Median
   qsort(timings, NUM_TIMINGS, sizeof(double), cmp_dbl);
   printf("Skinny64128: %f cycles per byte\n", timings[NUM_TIMINGS / 2]);
+
+  free(k);
+  free(out);
+  free(in);
 }

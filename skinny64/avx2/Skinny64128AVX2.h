@@ -30,6 +30,16 @@ Skinny64/128.
 #define LOAD(src) _mm256_loadu_si256((__m256i *)(src))
 #define STORE(dest,src) _mm256_storeu_si256((__m256i *)(dest),src)
 
+#define MASK3 _mm256_set_epi32(0x33333333, 0x33333333, 0x33333333, 0x33333333, 0x33333333, 0x33333333, 0x33333333, 0x33333333)
+#define MASK5 _mm256_set_epi32(0x55555555, 0x55555555, 0x55555555, 0x55555555, 0x55555555, 0x55555555, 0x55555555, 0x55555555)
+#define MASKa _mm256_set_epi32(0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa)
+#define MASKc _mm256_set_epi32(0xcccccccc, 0xcccccccc, 0xcccccccc, 0xcccccccc, 0xcccccccc, 0xcccccccc, 0xcccccccc, 0xcccccccc)
 
+#define SWAPMOVE(a, b, mask, shift) \
+{ \
+	u256 T = AND(XOR(SHIFTL64(a, shift), b), mask); \
+	b = XOR(b, T); \
+    a = XOR(a, SHIFTR64(T, shift)); \
+}
 
 #endif
