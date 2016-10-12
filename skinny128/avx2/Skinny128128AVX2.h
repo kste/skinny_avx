@@ -30,5 +30,25 @@ Skinny128/128.
 #define LOAD(src) _mm256_loadu_si256((__m256i *)(src))
 #define STORE(dest,src) _mm256_storeu_si256((__m256i *)(dest),src)
 
+#define MASK1 _mm256_set_epi32(0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa)
+#define MASK2 _mm256_set_epi32(0xcccccccc, 0xcccccccc, 0xcccccccc, 0xcccccccc, 0xcccccccc, 0xcccccccc, 0xcccccccc, 0xcccccccc)
+#define MASK4 _mm256_set_epi32(0xf0f0f0f0, 0xf0f0f0f0, 0xf0f0f0f0, 0xf0f0f0f0, 0xf0f0f0f0, 0xf0f0f0f0, 0xf0f0f0f0, 0xf0f0f0f0)
+#define MASK32 _mm256_set_epi32(0xffffffff, 0x00000000, 0xffffffff, 0x00000000, 0xffffffff, 0x00000000, 0xffffffff, 0x00000000)
+#define MASK64 _mm256_set_epi32(0xffffffff, 0xffffffff, 0x00000000, 0x00000000, 0xffffffff, 0xffffffff, 0x00000000, 0x00000000)
+
+#define SWAPMOVE(a, b, mask, shift) \
+{ \
+	u256 T = AND(XOR(SHIFTL64(a, shift), b), mask); \
+	b = XOR(b, T); \
+    a = XOR(a, SHIFTR64(T, shift)); \
+}
+
+//Swap move for shifting by 64
+#define SWAPMOVEBY64(a, b, mask) \
+{ \
+	u256 T = AND(XOR(_mm256_shuffle_epi8(a, _mm256_set_epi8(23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,31,30,29,28,27,26,25,24)), b), mask); \
+	b = XOR(b, T); \
+    a = XOR(a, _mm256_shuffle_epi8(T, _mm256_set_epi8(7,6,5,4,3,2,1,0,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8))); \
+}
 
 #endif

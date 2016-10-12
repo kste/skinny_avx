@@ -1,6 +1,6 @@
 C=gcc
 RM=rm -f
-CFLAGS=-O3 -mavx2
+CFLAGS=-O3 -mavx2 -funroll-all-loops
 SRCS=main.c unpack.c
 OBJS=$(subst .c,.o,$(SRCS))
 OUTFILE="skinny"
