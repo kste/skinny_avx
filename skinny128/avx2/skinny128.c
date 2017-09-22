@@ -154,4 +154,5 @@ void key_schedule(const unsigned char *k, u256 rk[40][16]) {
       tk1[i] = tmp[i];
     }
   }
+  free(tmp_key);
 }
