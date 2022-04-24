@@ -15,7 +15,7 @@ const unsigned char RC[62] = {
 void encrypt_64blocks(u256 x[16], u256 rk[36][8]) {
 
   int i, j;
-  u256 rc, tmp[3];
+  u256 rc, tmp[4];
   rc = _mm256_set_epi64x(0xFF000000FF0000ull,
                          0xFF000000FF0000ull,
                          0xFF000000FF0000ull,
